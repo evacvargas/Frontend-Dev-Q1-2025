@@ -172,7 +172,7 @@ For more detailed information about filtering and querying, refer to the [MockAP
 
 # Submission
 
-Upload your solution to your GitHub repository and share the link to developers@videsk.io with the subject "Frontend Dev Q2-2024" also your name and some optional explanation of your code.
+Upload your solution to your GitHub repository and share the link to developers@videsk.io with the subject "Frontend Dev Q1-2025" also your name and some optional explanation of your code.
 
 # Useful Resources
 
