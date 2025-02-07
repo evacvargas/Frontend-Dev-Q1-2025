@@ -16,6 +16,11 @@ class ModalSideBar extends HTMLElement {
         .modal.open {
           transform: translateX(0);
         }
+        .content {
+        display: -webkit-box;
+        -webkit-line-clamp: 6; 
+        -webkit-box-orient: vertical;
+        }
       </style>
       <div class="modal flex flex-col gap-4 fixed bg-gray-200 top-0 right-0 z-10 h-full w-1/2 shadow-xl p-6 overflow-auto text-justify bg-opacity-95 backdrop-blur-md" id="sideModal">
         <button class="text-gray-500 text-2xl font-bold absolute top-4 right-4" id="closeButton">&times;</button>
@@ -29,7 +34,7 @@ class ModalSideBar extends HTMLElement {
         </div>
 
         <div class="relative">
-          <p class="text-gray-600 overflow-hidden max-h-[10rem] "style="display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; "id="content" ></p>
+          <p class="content text-gray-600 overflow-hidden max-h-[10rem]" id="content" ></p>
           <button class="text-indigo-700 mt-2 font-bold italic" id="showMore">Mostrar más contenido...</button>
         </div>
 
