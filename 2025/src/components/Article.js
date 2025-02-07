@@ -36,8 +36,6 @@ class Article extends HTMLElement {
     this.shadowRoot.getElementById("articleCard").addEventListener("click", async () => {
       const authorData = await this.fetchAuthor(this.authorId);
       const modal = document.querySelector("side-modal");
-      console.log(authorData)
-
 
       if (modal) {
         modal.open({

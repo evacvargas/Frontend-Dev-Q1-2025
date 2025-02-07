@@ -42,24 +42,29 @@ class ArticlesList extends HTMLElement {
             </style>
             <nav class="bg-gray-500 p-4 flex justify-between items-center absolute top-0 left-0 w-full">
                 <h1 class="text-white text-xl font-bold">Article List</h1>
-                <div class="flex items-center">
+                <div class="flex">
                     <input type="text" id="searchInput" placeholder="Buscar Articulos..." class="p-2 rounded-l-md border border-gray-300 focus:border-indigo-500 focus:outline-none" />
                     <button id="searchButton" class="bg-indigo-500 text-white p-2 px-4 rounded-r-md">Buscar</button>
                     <div class="dropdown ml-2">
                         <button id="sortButton" class="bg-indigo-500 text-white p-2 rounded-md">Ordenar por fecha</button>
                         <div id="sortDropdown" class="dropdown-content">
-                            <button id="sortNewest" class="text-gray-500 hover:bg-gray-100">Mas recientes</button>
-                            <button id="sortOldest" class="text-gray-500 hover:bg-gray-100">Mas antiguos</button>
+                          <button id="sortNewest" class="text-gray-500 hover:bg-gray-100">Mas recientes</button>
+                          <button id="sortOldest" class="text-gray-500 hover:bg-gray-100">Mas antiguos</button>
                         </div>
                     </div>
                 </div>
             </nav>
             <div class="pt-16 mt-4">
-                <div id="articlesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-                </div>
-                <div id="loadingIndicator" class="text-center py-5 text-indigo-700 font-bold transition-opacity duration-300 z-10">
-                    Cargando más articulos...
-                </div>
+              <div id="articlesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+              </div>
+              <div id="messageContainer" class="hidden col-span-full text-center py-8">
+                <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" alt="No results" class="w-32 h-32 mx-auto mb-4">
+                <p class="text-gray-500 text-xl">No se encontraron artículos que coincidan con tu búsqueda</p>
+                <p class="text-gray-400 mt-2">Intenta con otros términos</p>
+              </div>
+              <div id="loadingIndicator" class="text-center py-5 text-indigo-700 font-bold transition-opacity duration-300 z-10">
+                Cargando más articulos...
+              </div>
             </div>
         `;
         this.shadowRoot.appendChild(template.content.cloneNode(true));
@@ -143,7 +148,11 @@ class ArticlesList extends HTMLElement {
 
     resetToInitialState() {
         const container = this.shadowRoot.getElementById('articlesContainer');
+        const messageContainer = this.shadowRoot.getElementById('messageContainer');
+
         container.innerHTML = '';
+        messageContainer.classList.add('hidden');
+
         this.displayedArticles = this.articles;
         this.currentIndex = this.chunkSize;
         this.renderArticles(this.articles.slice(0, this.chunkSize));
@@ -153,10 +162,12 @@ class ArticlesList extends HTMLElement {
 
     search(query) {
         const container = this.shadowRoot.getElementById('articlesContainer');
+        const messageContainer = this.shadowRoot.getElementById('messageContainer');
         container.innerHTML = '';
 
         if (!query.trim()) {
             this.resetToInitialState();
+            messageContainer.classList.add('hidden')
             return;
         }
 
@@ -167,6 +178,14 @@ class ArticlesList extends HTMLElement {
             );
         });
 
+        if (this.displayedArticles.length === 0) {
+          messageContainer.classList.remove('hidden');
+          const loadingIndicator = this.shadowRoot.getElementById('loadingIndicator');
+          loadingIndicator.style.display = 'none';
+          return;
+      }
+
+        messageContainer.classList.add('hidden');
         this.currentIndex = this.chunkSize;
         this.renderArticles(this.displayedArticles.slice(0, this.chunkSize));
 

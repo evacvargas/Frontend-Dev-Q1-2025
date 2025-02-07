@@ -22,22 +22,20 @@ class ModalSideBar extends HTMLElement {
         -webkit-box-orient: vertical;
         }
       </style>
-      <div class="modal flex flex-col gap-4 fixed bg-gray-200 top-0 right-0 z-10 h-full w-1/2 shadow-xl p-6 overflow-auto text-justify bg-opacity-95 backdrop-blur-md" id="sideModal">
+      <div class="modal flex flex-col gap-4 fixed bg-gray-200 top-0 right-0 z-10 h-full w-1/3 p-6 overflow-auto text-justify bg-opacity-95 backdrop-blur-md" id="sideModal">
         <button class="text-gray-500 text-2xl font-bold absolute top-4 right-4" id="closeButton">&times;</button>
         <h2 class="text-xl font-bold mb-2 text-indigo-700" id="title"></h2>
-        <img src="" alt="Imagen del artículo" class="object-cover rounded-lg w-4/5 m-auto rounded-lg shadow-md" id="articleImage">
+        <img src="" alt="Imagen del artículo" class="object-cover rounded-lg w-full m-auto rounded-lg shadow-md" id="articleImage">
         <div class="bg-white shadow-md p-6 rounded-lg">
           <p class="text-gray-600">
             <span class="font-bold"> Descripción: </span>
             <span id="description"/>
           </p>
         </div>
-
         <div class="relative">
           <p class="content text-gray-600 overflow-hidden max-h-[10rem]" id="content" ></p>
           <button class="text-indigo-700 mt-2 font-bold italic" id="showMore">Mostrar más contenido...</button>
         </div>
-
         <p class="text-indigo-500 text-sm">Publicado: <span id="publishedAt"></span></p>
         <p class="text-indigo-500 text-sm">Por: <span id="company"></span></p>
         <p class="text-gray-600 font-bold size-lg cursor-pointer" id="modalAuthor"></p>
