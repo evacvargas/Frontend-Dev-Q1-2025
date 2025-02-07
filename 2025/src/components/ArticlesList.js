@@ -43,13 +43,13 @@ class ArticlesList extends HTMLElement {
             <nav class="bg-gray-500 p-4 flex justify-between items-center absolute top-0 left-0 w-full">
                 <h1 class="text-white text-xl font-bold">Article List</h1>
                 <div class="flex items-center">
-                    <input type="text" id="searchInput" placeholder="Buscar Articulos..." class="p-2 rounded-l-md border border-gray-300" />
-                    <button id="searchButton" class="bg-indigo-500 text-white p-2 px-4">Buscar</button>
+                    <input type="text" id="searchInput" placeholder="Buscar Articulos..." class="p-2 rounded-l-md border border-gray-300 focus:border-indigo-500 focus:outline-none" />
+                    <button id="searchButton" class="bg-indigo-500 text-white p-2 px-4 rounded-r-md">Buscar</button>
                     <div class="dropdown ml-2">
                         <button id="sortButton" class="bg-indigo-500 text-white p-2 rounded-md">Ordenar por fecha</button>
                         <div id="sortDropdown" class="dropdown-content">
-                            <button id="sortNewest" class="text-gray-500 hover:bg-gray-100">Más recientes</button>
-                            <button id="sortOldest" class="text-gray-500 hover:bg-gray-100">Más antiguos</button>
+                            <button id="sortNewest" class="text-gray-500 hover:bg-gray-100">Mas recientes</button>
+                            <button id="sortOldest" class="text-gray-500 hover:bg-gray-100">Mas antiguos</button>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ class ArticlesList extends HTMLElement {
                 <div id="articlesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 </div>
                 <div id="loadingIndicator" class="text-center py-5 text-indigo-700 font-bold transition-opacity duration-300 z-10">
-                    Cargando más artículos...
+                    Cargando más articulos...
                 </div>
             </div>
         `;
@@ -299,21 +299,21 @@ class ArticlesList extends HTMLElement {
     }
 
     sortArticles(order) {
-        const container = this.shadowRoot.getElementById('articlesContainer');
-        container.innerHTML = '';
+      this.displayedArticles.sort((a, b) => {
+          const dateA = new Date(a.publishedAt);
+          const dateB = new Date(b.publishedAt);
+          return order === 'desc' ? dateB - dateA : dateA - dateB;
+      });
 
-        this.displayedArticles.sort((a, b) => {
-            const dateA = new Date(a.publishedAt);
-            const dateB = new Date(b.publishedAt);
-            return order === 'desc' ? dateB - dateA : dateA - dateB;
-        });
+      const container = this.shadowRoot.getElementById('articlesContainer');
+      container.innerHTML = '';
 
-        this.currentIndex = this.chunkSize;
-        this.renderArticles(this.displayedArticles.slice(0, this.chunkSize));
+      this.currentIndex = this.chunkSize;
+      this.renderArticles(this.displayedArticles.slice(0, this.chunkSize));
 
-        const loadingIndicator = this.shadowRoot.getElementById('loadingIndicator');
-        loadingIndicator.style.display = this.hasMoreArticles() ? 'block' : 'none';
-    }
+      const loadingIndicator = this.shadowRoot.getElementById('loadingIndicator');
+      loadingIndicator.style.display = this.hasMoreArticles() ? 'block' : 'none';
+  }
 }
 
 customElements.define('article-list', ArticlesList);
