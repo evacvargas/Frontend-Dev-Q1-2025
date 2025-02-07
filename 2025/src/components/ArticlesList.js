@@ -38,6 +38,7 @@ class ArticlesList extends HTMLElement {
                 }
                 .dropdown-content button:hover {
                     background-color: #f1f1f1;
+                    border-radius: 0 0 10px 10px;
                 }
             </style>
             <nav class="bg-gray-500 p-4 flex justify-between items-center absolute top-0 left-0 w-full">
